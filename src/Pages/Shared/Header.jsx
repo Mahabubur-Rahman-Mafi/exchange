@@ -41,13 +41,12 @@ const Header = () => {
                 <Button variant="outline-primary">Log in</Button>
               </Link>
               <Dropdown>
-                <Dropdown.Toggle variant="transparent" className="p-0" id="dropdown-basic">
-                                  <Image
-                                      src={me}
-                                      width='40px'
-                                      height='40px'
-                                      roundedCircle
-                                  />
+                <Dropdown.Toggle
+                  variant="transparent"
+                  className="p-0"
+                  id="dropdown-basic"
+                >
+                  <Image src={me} width="40px" height="40px" roundedCircle />
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
