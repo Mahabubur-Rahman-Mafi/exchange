@@ -1,0 +1,13 @@
+.menu-section a{
+ text-decoration: none;
+ color: #121212;
+ font-size: 20px;
+ font-weight: 500;
+}
+.menu-section a:hover{
+    color: #185ffb;
+    transform: scale(1.1);
+}
+.menu-section .active{
+    text-decoration: underline;
+}
