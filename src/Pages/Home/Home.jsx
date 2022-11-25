@@ -1,5 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import Banner from './Banner';
+
 
 const Home = () => {
     return (
@@ -8,11 +10,8 @@ const Home = () => {
           <meta charSet="utf-8" />
           <title>Home | ex-change</title>
         </Helmet>
-
         {/* items */}
-        <div>
-          <h1>This is home</h1>
-        </div>
+        <Banner></Banner>
       </>
     );
 };
