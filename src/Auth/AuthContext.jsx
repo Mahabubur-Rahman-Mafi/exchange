@@ -49,6 +49,14 @@ const AuthContext = ({ children }) => {
     setLoader(true);
     return signOut(auth);
   };
+
+  // update name 
+  const nameUpdate = (name, photo) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+    });
+  }
+
   const authInfo = {
     user,
     googleAuthProvider,
@@ -56,6 +64,7 @@ const AuthContext = ({ children }) => {
     createUser,
     userLogIn,
     logOutUser,
+    nameUpdate
   };
   return (
     <>

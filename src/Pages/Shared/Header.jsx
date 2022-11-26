@@ -46,7 +46,7 @@ const Header = () => {
               <NavLink to="/product" className='me-3'>Product</NavLink>
               {
                 user?.uid ?
-                <NavLink>DashBoard</NavLink>
+                <NavLink to='/dashboard'>DashBoard</NavLink>
                   :
                   ''
               }

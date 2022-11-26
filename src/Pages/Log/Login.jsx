@@ -4,41 +4,43 @@ import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { UserAuth } from "../../Auth/AuthContext";
 import { GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
   const { googleAuthProvider, userLogIn } = useContext(UserAuth);
-  const { register, handleSubmit, } = useForm();
-  const googleProvider = new GoogleAuthProvider()
-  const navigate = useNavigate()
+  const { register, handleSubmit } = useForm();
+  const googleProvider = new GoogleAuthProvider();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
+
   const onSubmit = (data) => {
     userLogIn(data.email, data.password)
-    .then(result => {
-      const user = result.user
-      console.log(user);
-      navigate('/')
-    })
-      .catch(e => {
-      console.log(e);
-    })
-  }
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+        navigate(from, { replace: true });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   // google
   const googleButton = () => {
     googleAuthProvider(googleProvider)
-      .then(result => {
-        const user = result.user
-        navigate('/')
+      .then((result) => {
+        const user = result.user;
+        navigate(from, { replace: true });
       })
-      .catch(
-        e => {
-          console.log(e);
-      }
-    )
-  }
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <>
