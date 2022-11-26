@@ -4,6 +4,8 @@ import Blog from "../Pages/Blog";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Log/Login";
 import SignUp from "../Pages/Log/SignUp";
+import Category from "../Pages/Porducts/Category";
+import PorductDetails from "../Pages/Porducts/PorductDetails";
 import Product from "../Pages/Porducts/Product";
 
 const routes = createBrowserRouter([
@@ -17,11 +19,26 @@ const routes = createBrowserRouter([
       },
       {
         path: "/blog",
-        element: <Blog></Blog>
+        element: <Blog></Blog>,
       },
       {
         path: "/product",
-        element: <Product></Product>
+        element: <Product></Product>,
+        loader: () => fetch("http://localhost:5000/categories"),
+        children: [
+          {
+            path: "/product/category/:id",
+            element: <Category></Category>,
+            loader: ({ params }) =>
+              fetch(`http://localhost:5000/product/category/${params.id}`),
+          },
+        ],
+      },
+      {
+        path: "/category/:id",
+        element: <PorductDetails></PorductDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/category/${params.id}`),
       },
     ],
   },
@@ -31,7 +48,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "/signup",
-    element: <SignUp></SignUp>
+    element: <SignUp></SignUp>,
   },
 ]);
 

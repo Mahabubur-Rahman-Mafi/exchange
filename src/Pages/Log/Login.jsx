@@ -19,7 +19,7 @@ const Login = () => {
         <title>Log In | ex-change</title>
       </Helmet>
       <Container>
-        <h1 className="text-center mt-4">Log In Here</h1>
+        <h1 className="text-center mt-4">Log Here</h1>
         <Form
           onSubmit={handleSubmit(onSubmit)}
           className="w-50 mx-auto mt-5 p-5 signup-design"
