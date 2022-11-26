@@ -2,22 +2,23 @@ import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import logo from "../../assets/logo.png";
 import Form from "react-bootstrap/Form";
 import Dropdown from "react-bootstrap/Dropdown";
 import "./Shared.css";
 import { Image } from "react-bootstrap";
-import me from "../../assets/pro.jpg";
 import { UserAuth } from "../../Auth/AuthContext";
-import { FaUser } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const { user, logOutUser } = useContext(UserAuth);
+  const navigate = useNavigate()
 
   const buttonLogOut = () => {
     logOutUser()
+      navigate('/')
       .then()
     .catch(e=>console.log(e))
   }
@@ -43,13 +44,10 @@ const Header = () => {
               <NavLink to="/blog" className="me-3">
                 Blog
               </NavLink>
-              <NavLink to="/product" className='me-3'>Product</NavLink>
-              {
-                user?.uid ?
-                <NavLink to='/dashboard'>DashBoard</NavLink>
-                  :
-                  ''
-              }
+              <NavLink to="/product" className="me-3">
+                Product
+              </NavLink>
+              {user?.uid ? <NavLink to="/dashboard">DashBoard</NavLink> : ""}
             </Nav>
             <Nav>
               {user?.uid ? (
@@ -60,17 +58,16 @@ const Header = () => {
                       className="p-0"
                       id="dropdown-basic"
                     >
-                      {
-                        user?.photoURL ? 
-                           <Image
-                        src={user.photoURL}
-                        width="40px"
-                        height="40px"
-                        roundedCircle
-                      />
-                          :
-                          <FaUser></FaUser>
-                     }
+                      {user?.photoURL ? (
+                        <Image
+                          src={user.photoURL}
+                          width="40px"
+                          height="40px"
+                          roundedCircle
+                        />
+                      ) : (
+                        <FaUserCircle className="fs-3 p-0"></FaUserCircle>
+                      )}
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
@@ -83,8 +80,9 @@ const Header = () => {
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-                    <Button variant="outline-primary" onClick={buttonLogOut}>Log Out</Button>
-
+                  <Button variant="outline-primary" onClick={buttonLogOut}>
+                    Log Out
+                  </Button>
                 </>
               ) : (
                 <Link to="/login">

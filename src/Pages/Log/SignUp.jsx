@@ -20,7 +20,7 @@ const SignUp = () => {
 
   const from = location.state?.from?.pathname || "/";
 
-  const { register, handleSubmit, required } = useForm();
+  const { register, handleSubmit, } = useForm();
 
   const onSubmit = (d) => {
     createUser(d.email, d.password)
@@ -66,7 +66,7 @@ const SignUp = () => {
             <Form.Control
               type="text"
               placeholder="Your Full Name"
-              {...register("name", { required })}
+              {...register("name", { required:true })}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">

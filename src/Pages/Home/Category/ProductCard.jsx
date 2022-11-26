@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import { UserAuth } from "../../../Auth/AuthContext";
+import { useForm } from "react-hook-form";
+
 const ProductCard = ({ p }) => {
+  const { register, handleSubmit, required } = useForm();
 
-   const [show, setShow] = useState(false);
+  const { user } = useContext(UserAuth);
 
-   const handleClose = () => setShow(false);
-   const handleShow = () => setShow(true);
+  const [show, setShow] = useState(false);
+  const [clicked, setClicked] = useState({})
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+// form submit
+  const onSubmit = (d) => {
+    handleClose()
+    console.log(d);
+  }
+
+
+  const handleButton = (e) => {
+    handleShow()
+    if (e === p._id) {
+      setClicked(p)
+    }
+  }
   return (
     <div>
       <Card className="mt-4 ">
@@ -26,7 +45,7 @@ const ProductCard = ({ p }) => {
         </ListGroup>
 
         <Card.Footer className="text-center">
-          <Button className="text-end" onClick={handleShow}>
+          <Button className="text-end" onClick={() => handleButton(p._id)}>
             Book Now
           </Button>
         </Card.Footer>
@@ -38,31 +57,67 @@ const ProductCard = ({ p }) => {
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
+        // className="modal-dialog modal-dialog-scrollable"
       >
         <Modal.Header closeButton>
           <Modal.Title>Set a meeting</Modal.Title>
         </Modal.Header>
-        <Form className="p-3">
+        <Form className="p-3" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com"  readOnly/>
+            <Form.Control
+              type="email"
+              placeholder="name@example.com"
+              {...register("email", { required: true })}
+              readOnly
+              defaultValue={user?.email}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com" />
+            <Form.Label>User Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="name@example.com"
+              {...register("userName", { required: true })}
+              readOnly
+              defaultValue={user?.displayName}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com" />
+            <Form.Label>Item Name</Form.Label>
+            <Form.Control
+              type="text"
+              readOnly
+              defaultValue={clicked?.title}
+              {...register("itemName")}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com" />
+            <Form.Label>Price</Form.Label>
+            <Form.Control
+              type="text"
+              readOnly
+              defaultValue={clicked?.amount}
+              {...register("price")}
+            />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="name@example.com" />
+            <Form.Label>Your Phone Number</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your phone number"
+              {...register("sellerPhone", { required: true })}
+            />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Your Meeting Location</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter your location"
+              {...register("sellerLocation", { required: true })}
+            />
+          </Form.Group>
+
           <Button variant="primary" type="submit">
             Submit
           </Button>

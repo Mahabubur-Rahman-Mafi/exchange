@@ -6,7 +6,6 @@ import Home from "../Pages/Home/Home";
 import Login from "../Pages/Log/Login";
 import SignUp from "../Pages/Log/SignUp";
 import Category from "../Pages/Porducts/Category";
-import PorductDetails from "../Pages/Porducts/PorductDetails";
 import Product from "../Pages/Porducts/Product";
 import PrivateRoute from "./PrivateRoute";
 
