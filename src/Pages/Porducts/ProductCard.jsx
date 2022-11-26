@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
-import { Link } from "react-router-dom";
+import ListGroup from "react-bootstrap/ListGroup"
+// import { handleShow } from "../../Gobal/CardModal";
 const ProductCard = ({ p }) => {
   return (
     <div>
@@ -19,13 +19,8 @@ const ProductCard = ({ p }) => {
           <ListGroup.Item>Sell by: {p?.name}</ListGroup.Item>
         </ListGroup>
 
-        <Card.Footer className="text-center">
-          <Link to={`/category/${p._id}`}>
-            <Button className="me-4" variant="outline-primary">
-              View Details
-            </Button>
-          </Link>
-          <Button className="text-end">Book Now</Button>
+        <Card.Footer className="text-center " >
+          {/* <Button className="text-end">Book Now</Button> */}
         </Card.Footer>
       </Card>
     </div>

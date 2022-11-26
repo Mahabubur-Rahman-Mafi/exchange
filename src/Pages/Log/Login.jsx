@@ -1,16 +1,44 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
+import { UserAuth } from "../../Auth/AuthContext";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Login = () => {
-  const { register, handleSubmit, required } = useForm();
+  const { googleAuthProvider, userLogIn } = useContext(UserAuth);
+  const { register, handleSubmit, } = useForm();
+  const googleProvider = new GoogleAuthProvider()
+  const navigate = useNavigate()
+  const onSubmit = (data) => {
+    userLogIn(data.email, data.password)
+    .then(result => {
+      const user = result.user
+      console.log(user);
+      navigate('/')
+    })
+      .catch(e => {
+      console.log(e);
+    })
+  }
 
-  const onSubmit = (data) => console.log(data);
+  // google
+  const googleButton = () => {
+    googleAuthProvider(googleProvider)
+      .then(result => {
+        const user = result.user
+        navigate('/')
+      })
+      .catch(
+        e => {
+          console.log(e);
+      }
+    )
+  }
 
   return (
     <>
@@ -56,6 +84,7 @@ const Login = () => {
           <Button
             className="w-100 py-2 fs-5 fw-semibold"
             variant="outline-dark"
+            onClick={googleButton}
           >
             <FaGoogle className="me-2" />
             Go with Google

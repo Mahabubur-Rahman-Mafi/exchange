@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,8 +10,17 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "./Shared.css";
 import { Image } from "react-bootstrap";
 import me from "../../assets/pro.jpg";
+import { UserAuth } from "../../Auth/AuthContext";
+import { FaUser } from "react-icons/fa";
 
 const Header = () => {
+  const { user, logOutUser } = useContext(UserAuth);
+
+  const buttonLogOut = () => {
+    logOutUser()
+      .then()
+    .catch(e=>console.log(e))
+  }
   return (
     <div>
       <Navbar collapseOnSelect expand="lg" bg="transparent" className="mt-2">
@@ -34,38 +43,60 @@ const Header = () => {
               <NavLink to="/blog" className="me-3">
                 Blog
               </NavLink>
-              <NavLink to="/product">Product</NavLink>
+              <NavLink to="/product" className='me-3'>Product</NavLink>
+              {
+                user?.uid ?
+                <NavLink>DashBoard</NavLink>
+                  :
+                  ''
+              }
             </Nav>
             <Nav>
-              <Link to="/login">
-                <Button variant="outline-primary">Log in</Button>
-              </Link>
-              <Dropdown>
-                <Dropdown.Toggle
-                  variant="transparent"
-                  className="p-0"
-                  id="dropdown-basic"
-                >
-                  <Image src={me} width="40px" height="40px" roundedCircle />
-                </Dropdown.Toggle>
+              {user?.uid ? (
+                <>
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="transparent"
+                      className="p-0"
+                      id="dropdown-basic"
+                    >
+                      {
+                        user?.photoURL ? 
+                           <Image
+                        src={user.photoURL}
+                        width="40px"
+                        height="40px"
+                        roundedCircle
+                      />
+                          :
+                          <FaUser></FaUser>
+                     }
+                    </Dropdown.Toggle>
 
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Link to="/signup">
-                <Button variant="outline-primary">Sign Up</Button>
-              </Link>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                      <Dropdown.Item href="#/action-2">
+                        Another action
+                      </Dropdown.Item>
+                      <Dropdown.Item href="#/action-3">
+                        Something else
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                    <Button variant="outline-primary" onClick={buttonLogOut}>Log Out</Button>
+
+                </>
+              ) : (
+                <Link to="/login">
+                  <Button variant="outline-primary">Log in</Button>
+                </Link>
+              )}
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
+
+      {/* form section  */}
       <Form className="d-flex w-75 mx-auto my-3">
         <Form.Control
           type="search"

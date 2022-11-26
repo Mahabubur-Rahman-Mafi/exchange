@@ -1,18 +1,49 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import './Shared.css'
+import { UserAuth } from "../../Auth/AuthContext";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const SignUp = () => {
+
+   const googleProvider = new GoogleAuthProvider()
+  const { googleAuthProvider, createUser } = useContext(UserAuth);
+
+  const navigate =useNavigate()
   const { register, handleSubmit, required } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = (d) => {
+    createUser(d.email, d.password)
+      .then(result =>{
+        const user = result.user
+        console.log(user);
+      })
+      .catch(e => {
+        console.log(e);
+      })
+  }
+
+  // google
+  const googleButton = () => {
+    googleAuthProvider(googleProvider)
+      .then(result => {
+        const user = result.user
+        console.log(user);
+        navigate('/')
+      })
+      .catch(
+        e => {
+          console.log(e);
+        }
+      )
+  }
   return (
     <>
       <Helmet>
@@ -79,6 +110,8 @@ const SignUp = () => {
           <Button
             className="w-100 py-2 fs-5 fw-semibold"
             variant="outline-dark"
+            onClick={googleButton}
+
           >
             <FaGoogle className="me-2" />
             Go with Google
