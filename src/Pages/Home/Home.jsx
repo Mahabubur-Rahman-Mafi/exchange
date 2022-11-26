@@ -1,6 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import Product from '../Porducts/Product';
 import Banner from './Banner';
+import Categories from './Categories';
 
 
 const Home = () => {
@@ -12,6 +14,7 @@ const Home = () => {
         </Helmet>
         {/* items */}
         <Banner></Banner>
+        <Categories></Categories>
       </>
     );
 };

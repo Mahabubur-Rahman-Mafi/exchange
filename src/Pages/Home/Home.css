@@ -1,0 +1,20 @@
+.category-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+.cate-card {
+  width: 300px;
+  /* height: 200px; */
+  /* background-color: transparent; */
+   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, .2) !important; 
+  border-radius: 10px ;
+  background-color: #1 .01 !important;
+  /* background: url('../../assets/image-min.jpg'); */
+  
+  backdrop-filter: blur(5px) !important;
+}
+.cate-card:hover {
+ transform: scale(1.2);
+ transition: ease-in;
+}
