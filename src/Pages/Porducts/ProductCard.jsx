@@ -10,7 +10,7 @@ const ProductCard = ({ p }) => {
         <Card.Img variant="top" src={p.image} />
         <Card.Body>
           <Card.Title>{p.title}</Card.Title>
-          <Card.Text>{p.des.split("", 25)}</Card.Text>
+          <Card.Text></Card.Text>
         </Card.Body>
         <ListGroup className="list-group-flush">
           <ListGroup.Item>Usages: {p.usagesTime}</ListGroup.Item>

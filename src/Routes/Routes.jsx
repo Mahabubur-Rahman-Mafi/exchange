@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
+import Dash from "../Pages/DashBoard/Dash";
 import Main from "../Layout/Main";
 import Blog from "../Pages/Blog";
-import DashBoard from "../Pages/DashBoard/DashBoard";
 import CateProduct from "../Pages/Home/Category/CateProduct";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Log/Login";
@@ -51,9 +51,9 @@ const routes = createBrowserRouter([
           fetch(`http://localhost:5000/category/${params.id}`),
       },
       {
-        path: 'dashboard',
-        element:<DashBoard></DashBoard>
-      }
+        path: "dashboard",
+        element: <Dash></Dash>,
+      },
     ],
   },
   {

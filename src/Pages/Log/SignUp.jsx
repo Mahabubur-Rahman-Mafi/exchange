@@ -10,6 +10,7 @@ import { FaGoogle } from "react-icons/fa";
 import "./Shared.css";
 import { UserAuth } from "../../Auth/AuthContext";
 import { GoogleAuthProvider } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const googleProvider = new GoogleAuthProvider();
@@ -26,13 +27,35 @@ const SignUp = () => {
     createUser(d.email, d.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
         setUser(user);
         nameUpdate(d.name);
         navigate(from, { replace: true });
+        toast.success('Sign Up Successfully')
       })
       .catch((e) => {
         console.log(e);
+      });
+    
+    // make db
+    const userData = {
+      email: d.email,
+      name: d.name,
+      role: d.type,
+    };
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        toast.error('SignUp Failed')
       });
   };
 
