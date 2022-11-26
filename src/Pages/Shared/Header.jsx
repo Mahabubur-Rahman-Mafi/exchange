@@ -37,7 +37,7 @@ const Header = () => {
               <NavLink to="/product">Product</NavLink>
             </Nav>
             <Nav>
-              <Link to="login">
+              <Link to="/login">
                 <Button variant="outline-primary">Log in</Button>
               </Link>
               <Dropdown>
@@ -59,7 +59,7 @@ const Header = () => {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Link to="signup">
+              <Link to="/signup">
                 <Button variant="outline-primary">Sign Up</Button>
               </Link>
             </Nav>
