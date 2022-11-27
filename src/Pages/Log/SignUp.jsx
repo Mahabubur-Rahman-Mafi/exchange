@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
@@ -15,6 +15,7 @@ import toast from "react-hot-toast";
 const SignUp = () => {
   const googleProvider = new GoogleAuthProvider();
   const { googleAuthProvider, createUser, setUser, nameUpdate } = useContext(UserAuth);
+  const [er, setEr] =useState('')
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,7 +34,7 @@ const SignUp = () => {
         toast.success('Sign Up Successfully')
       })
       .catch((e) => {
-        console.log(e);
+        setEr(e.messages);
       });
 
     // make db
@@ -68,7 +69,7 @@ const SignUp = () => {
         navigate(from, { replace: true });
       })
       .catch((e) => {
-        console.log(e);
+        setEr(e.messages);
       });
   };
   return (
@@ -123,7 +124,7 @@ const SignUp = () => {
               <option value="buyer">Buyer</option>
             </Form.Select>
           </FloatingLabel>
-
+          <p className="text-danger">{ er}</p>
           <Button
             variant="primary"
             type="submit"

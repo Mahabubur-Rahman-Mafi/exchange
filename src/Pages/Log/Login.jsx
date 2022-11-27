@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { useForm } from "react-hook-form";
@@ -8,9 +8,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { UserAuth } from "../../Auth/AuthContext";
 import { GoogleAuthProvider } from "firebase/auth";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const { googleAuthProvider, userLogIn } = useContext(UserAuth);
+  const [er, setEr] =useState('')
   const { register, handleSubmit } = useForm();
   const googleProvider = new GoogleAuthProvider();
   const navigate = useNavigate();
@@ -22,11 +24,12 @@ const Login = () => {
     userLogIn(data.email, data.password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+        toast.success('Login Successfully')
         navigate(from, { replace: true });
       })
       .catch((e) => {
-        console.log(e);
+        setEr(e.messages);
+
       });
   };
 
@@ -38,7 +41,7 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((e) => {
-        console.log(e);
+        setEr(e.messages);
       });
   };
 
@@ -72,7 +75,7 @@ const Login = () => {
               {...register("password", { required: true })}
             />
           </Form.Group>
-
+          <p>{ er}</p>
           <Button
             variant="primary"
             type="submit"
