@@ -6,7 +6,7 @@ import useBuyer from "../../Hooks/useBuyer";
 import useSeller from "../../Hooks/useSeller";
 import Admin from "./Admin";
 import Buyer from "./Buyer";
-import Seller from "./Seller";
+import Seller from "../DashBoard/Seller/Seller";
 
 const Dash = () => {
   const { user } = useContext(UserAuth);

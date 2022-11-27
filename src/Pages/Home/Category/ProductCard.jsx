@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import Spinner from "../../../Global/Spinner";
 import { format } from "date-fns";
+import useSeller from "../../../Hooks/useSeller";
 
 const ProductCard = ({ p }) => {
   const { register, handleSubmit, required, reset } = useForm();
@@ -18,7 +19,7 @@ const ProductCard = ({ p }) => {
   const [clicked, setClicked] = useState({})
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  // const time1 = format()
+  const [isSeller] =useSeller(user?.email)
 
   if (loader) {
     return <Spinner></Spinner>;
@@ -72,7 +73,7 @@ const ProductCard = ({ p }) => {
         </ListGroup>
 
         <Card.Footer className="text-center">
-          <Button className="text-end" onClick={() => handleButton(p._id)}>
+          <Button className="text-end" onClick={() => handleButton(p._id)} disabled={isSeller}>
             Book Now
           </Button>
         </Card.Footer>
@@ -140,7 +141,7 @@ const ProductCard = ({ p }) => {
             <Form.Control
               type="number"
               placeholder="Enter your phone number"
-              {...register("sellerPhone", { required: true })}
+              {...register("buyerPhone", { required: true })}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -148,7 +149,7 @@ const ProductCard = ({ p }) => {
             <Form.Control
               type="text"
               placeholder="Enter your location"
-              {...register("sellerLocation", { required: true })}
+              {...register("buyerLocation", { required: true })}
             />
           </Form.Group>
 

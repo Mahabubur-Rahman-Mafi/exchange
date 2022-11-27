@@ -35,7 +35,7 @@ const SignUp = () => {
       .catch((e) => {
         console.log(e);
       });
-    
+
     // make db
     const userData = {
       email: d.email,

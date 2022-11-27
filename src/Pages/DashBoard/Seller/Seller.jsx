@@ -1,52 +1,58 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
-import { UserAuth } from "../../Auth/AuthContext";
-import Spinner from "../../Global/Spinner";
+import { UserAuth } from "../../../Auth/AuthContext";
 import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import toast from "react-hot-toast";
+import Upload from "./Upload";
 
-const Buyer = () => {
-  const { user, } = useContext(UserAuth);
+
+const Seller = () => {
+  const { user } = useContext(UserAuth);
+
   const {
-    data: orders = [],
+    data: products = [],
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["orders"],
+    queryKey: ["products"],
     queryFn: () =>
-      fetch(`http://localhost:5000/orders/${user?.email}`).then((res) =>
-        res.json()
+      fetch(`http://localhost:5000/products/${user?.email}`).
+        then((res) => {
+          return res.json()
+        }
+
       ),
   });
-  //
+  refetch();
+  // delete product
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/orders/${id}`, { method: "DELETE" })
+    fetch(`http://localhost:5000/products/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        toast.success("Booking Cancel");
-        refetch();
+        toast.success("Product removed");
+        refetch()
       })
       .catch((e) => {
         console.log(e);
         toast.error("Failed");
       });
-  };
-  return (
+  }
+  refetch();return (
     <div>
-      <h2 className="text-center mt-4 mb-3">Welcome to {user?.displayName} </h2>
+      <h4 className="text-center">Welcome Back {user?.displayName}</h4>
       <p className="text-center">
         {
           <>
-            {orders?.length}
-            {orders?.length <= 1
-              ? " item you have ordered"
-              : " items you have ordered"}
+            {products?.length}
+            {products?.length <= 1
+              ? " product you want to sell"
+              : " products you want to sell"}
           </>
         }
       </p>
-      {orders?.length >= 1 && (
+      {products?.length >= 1 && (
         <Table striped bordered hover className="text-center mt-4">
           <thead>
             <tr>
@@ -58,20 +64,20 @@ const Buyer = () => {
             </tr>
           </thead>
 
-          {orders.map((order, i) => (
+          {products.map((order, i) => (
             <tbody key={order._id}>
               {" "}
               <tr>
                 <td>{i + 1}</td>
-                <td>{order.itemName}</td>
-                <td>{order.price}</td>
+                <td>{order.title}</td>
+                <td>{order.amount}</td>
                 <td>{order.date}</td>
                 <td>
                   <Button
                     variant="outline-danger"
-                    onClick={() => handleDelete(order._id)}
+                    onClick={()=>handleDelete(order._id)}
                   >
-                    Cancel Order
+                   Delete Product
                   </Button>
                 </td>
               </tr>
@@ -79,8 +85,9 @@ const Buyer = () => {
           ))}
         </Table>
       )}
+      <Upload></Upload>
     </div>
   );
 };
 
-export default Buyer;
+export default Seller;
