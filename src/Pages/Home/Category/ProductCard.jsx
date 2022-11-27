@@ -6,18 +6,26 @@ import Modal from "react-bootstrap/Modal";
 import { UserAuth } from "../../../Auth/AuthContext";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Spinner from "../../../Global/Spinner";
+import { format } from "date-fns";
 
 const ProductCard = ({ p }) => {
-  const { register, handleSubmit, required } = useForm();
+  const { register, handleSubmit, required, reset } = useForm();
 
-  const { user } = useContext(UserAuth);
-
+  const { user, loader } = useContext(UserAuth);
+  const time =  new Date().toLocaleString() ;
   const [show, setShow] = useState(false);
   const [clicked, setClicked] = useState({})
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // const time1 = format()
 
-// form submit
+  if (loader) {
+    return <Spinner></Spinner>;
+  }
+
+
+  // form submit
   const onSubmit = (data) => {
     handleClose()
     fetch("http://localhost:5000/orders", {
@@ -31,6 +39,7 @@ const ProductCard = ({ p }) => {
       .then((data) => {
         // console.log(data);
         toast.success('Order Added')
+        reset()
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -82,6 +91,13 @@ const ProductCard = ({ p }) => {
         </Modal.Header>
         <Form className="p-3" onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Control
+              type="text"
+              {...register("date", { required: true })}
+              readOnly
+              defaultValue={format(new Date(), 'PP')}
+              className='mb-2'
+            />
             <Form.Label>Email address</Form.Label>
             <Form.Control
               type="email"

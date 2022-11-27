@@ -64,7 +64,8 @@ const AuthContext = ({ children }) => {
     createUser,
     userLogIn,
     logOutUser,
-    nameUpdate
+    nameUpdate,
+    loader,
   };
   return (
     <>
