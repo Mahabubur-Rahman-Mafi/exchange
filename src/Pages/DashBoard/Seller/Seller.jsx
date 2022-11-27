@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserAuth } from "../../../Auth/AuthContext";
 import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
@@ -9,7 +9,8 @@ import Upload from "./Upload";
 
 const Seller = () => {
   const { user } = useContext(UserAuth);
-
+  const [upload, setUpload] = useState(false)
+  
   const {
     data: products = [],
     isLoading,
@@ -24,7 +25,10 @@ const Seller = () => {
 
       ),
   });
+if (upload) {
   refetch();
+}
+  // load category
   // delete product
   const handleDelete = (id) => {
     fetch(`http://localhost:5000/products/${id}`, { method: "DELETE" })
@@ -39,7 +43,8 @@ const Seller = () => {
         toast.error("Failed");
       });
   }
-  refetch();return (
+  refetch();
+  return (
     <div>
       <h4 className="text-center">Welcome Back {user?.displayName}</h4>
       <p className="text-center">
@@ -59,8 +64,9 @@ const Seller = () => {
               <th>Serial</th>
               <th>ItemName</th>
               <th>Price</th>
-              <th>Booking Date</th>
+              <th>Upload Date</th>
               <th>Status</th>
+              <th>Do</th>
             </tr>
           </thead>
 
@@ -75,9 +81,17 @@ const Seller = () => {
                 <td>
                   <Button
                     variant="outline-danger"
-                    onClick={()=>handleDelete(order._id)}
+                    onClick={() => handleDelete(order._id)}
                   >
-                   Delete Product
+                    Delete Product
+                  </Button>
+                </td>
+                <td>
+                  <Button
+                    variant="outline-success"
+                    // onClick={()=>handleAdvertise(order._id)
+                  >
+                    Advertised
                   </Button>
                 </td>
               </tr>
@@ -85,7 +99,7 @@ const Seller = () => {
           ))}
         </Table>
       )}
-      <Upload></Upload>
+      <Upload setUpload={setUpload}></Upload>
     </div>
   );
 };

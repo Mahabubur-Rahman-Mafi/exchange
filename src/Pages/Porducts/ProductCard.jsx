@@ -16,7 +16,7 @@ const ProductCard = ({ p }) => {
           <ListGroup.Item>Usages: {p.usagesTime}</ListGroup.Item>
           <ListGroup.Item>Asking Price: {p.amount} BDT</ListGroup.Item>
           <ListGroup.Item>Market Price: {p.originalPrice}BDT</ListGroup.Item>
-          <ListGroup.Item>Sell by: {p?.name}</ListGroup.Item>
+          <ListGroup.Item>Sell by: {p?.sellerName}</ListGroup.Item>
         </ListGroup>
 
         <Card.Footer className="text-center " >

@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, ModalBody } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -7,16 +7,24 @@ import { useForm } from "react-hook-form";
 import { UserAuth } from "../../../Auth/AuthContext";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
-
-const Upload = () => {
+const Upload = ({ setUpload }) => {
   const { user } = useContext(UserAuth);
   const [show, setShow] = useState(false);
-    const { register, handleSubmit, required, reset } = useForm();
+  const [cat, setCat] = useState([]);
+  const { register, handleSubmit, required, reset } = useForm();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  //   category upload
+  useEffect(() => {
+    fetch("http://localhost:5000/categories")
+      .then((res) => res.json())
+      .then((d) => setCat(d));
+  }, [user]);
+console.log(cat);
   // form submit
   const onSubmit = (d) => {
     handleClose();
@@ -30,35 +38,14 @@ const Upload = () => {
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
-        toast.success("Product Added")
-          reset();
+        setUpload(true);
+        toast.success("Product Added");
+        reset();
       })
       .catch((error) => {
         console.error("Error:", error);
         toast.error("Failed to add");
-      })
-
-    //   category upload
-      const category = {
-        categoryName: d.categoryName
-      };
-      fetch("http://localhost:5000/categories", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(category),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          // console.log(data);
-          toast.success("Category Added");
-          reset();
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          toast.error("Failed to add");
-        });
+      });
 
   };
   return (
@@ -149,14 +136,6 @@ const Upload = () => {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Category Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Enter category"
-                {...register("categoryName", { required: true })}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Image URL</Form.Label>
               <Form.Control
                 type="text"
@@ -172,6 +151,21 @@ const Upload = () => {
                 {...register("originalPrice", { required: true })}
               />
             </Form.Group>
+            <FloatingLabel
+              controlId="floatingSelect"
+              label="Set your category"
+              className="fs-6 fw-semibold mt-4"
+            >
+              <Form.Select
+                aria-label="Floating label select example"
+                className="fs-5"
+                {...register("categoryName", { required: true })}
+              >
+                {cat?.map((c) => (
+                  <option value={c.categoryName}>{c.categoryName}</option>
+                ))}
+              </Form.Select>
+            </FloatingLabel>
             <FloatingLabel
               controlId="floatingSelect"
               label="Condition type"
