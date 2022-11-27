@@ -3,11 +3,14 @@ import React, { useContext } from "react";
 import { UserAuth } from "../../Auth/AuthContext";
 import Spinner from "../../Global/Spinner";
 import Table from "react-bootstrap/Table";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import toast from "react-hot-toast";
+import useAdmin from "../../Hooks/useAdmin";
+import { Link } from "react-router-dom";
 
 const Buyer = () => {
   const { user, } = useContext(UserAuth);
+  const [isAdmin] = useAdmin(user?.email)
   const {
     data: orders = [],
     isLoading,
@@ -34,7 +37,7 @@ const Buyer = () => {
       });
   };
   return (
-    <div>
+    <Container>
       <h2 className="text-center mt-4 mb-3">Welcome to {user?.displayName} </h2>
       <p className="text-center">
         {
@@ -79,7 +82,23 @@ const Buyer = () => {
           ))}
         </Table>
       )}
-    </div>
+      <div className="text-center fs-4 fw-semibold">
+        {isAdmin && (
+          <>
+            <Link to="/dashboard">
+              <Button className="w-25 my-5 me-4" variant="outline-dark">
+                Go to DashBoard
+              </Button>
+            </Link>
+            <Link to="/seller">
+              <Button className="w-25 my-5" variant="dark">
+                View as Seller
+              </Button>
+            </Link>
+          </>
+        )}
+      </div>
+    </Container>
   );
 };
 

@@ -9,6 +9,9 @@ import SignUp from "../Pages/Log/SignUp";
 import Category from "../Pages/Porducts/Category";
 import Product from "../Pages/Porducts/Product";
 import PrivateRoute from "./PrivateRoute";
+import Seller from "../Pages/DashBoard/Seller/Seller";
+import Buyer from "../Pages/DashBoard/Buyer";
+import AdminRoute from "./AdminRoute";
 
 const routes = createBrowserRouter([
   {
@@ -53,6 +56,23 @@ const routes = createBrowserRouter([
       {
         path: "dashboard",
         element: <Dash></Dash>,
+      },
+      {
+        path: "seller",
+        element: (
+          <AdminRoute>
+            <Seller></Seller>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "buyer",
+        element: (
+          <AdminRoute>
+            {" "}
+            <Buyer></Buyer>
+          </AdminRoute>
+        ),
       },
     ],
   },

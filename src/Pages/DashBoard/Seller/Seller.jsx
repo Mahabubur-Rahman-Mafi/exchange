@@ -2,15 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
 import { UserAuth } from "../../../Auth/AuthContext";
 import Table from "react-bootstrap/Table";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import toast from "react-hot-toast";
 import Upload from "./Upload";
+import useAdmin from "../../../Hooks/useAdmin";
+import { Link } from "react-router-dom";
 
 
 const Seller = () => {
   const { user } = useContext(UserAuth);
   const [upload, setUpload] = useState(false)
   const [btn, setBtn] = useState(false)
+  const [isAdmin] = useAdmin(user?.email)
   
   const {
     data: products = [],
@@ -65,7 +68,7 @@ if (upload) {
   }
   refetch();
   return (
-    <div>
+    <Container>
       <h4 className="text-center">Welcome Back {user?.displayName}</h4>
       <p className="text-center">
         {
@@ -107,13 +110,15 @@ if (upload) {
                   </Button>
                 </td>
                 <td>
-                  {!order?.advertise &&
-                    <Button Button
-                    variant="outline-success"
-                    onClick={() => handleAdvertise(order._id)}
-                  >
-                    Advertised
-                  </Button>}
+                  {!order?.advertise && (
+                    <Button
+                      Button
+                      variant="outline-success"
+                      onClick={() => handleAdvertise(order._id)}
+                    >
+                      Advertised
+                    </Button>
+                  )}
                 </td>
               </tr>
             </tbody>
@@ -121,7 +126,23 @@ if (upload) {
         </Table>
       )}
       <Upload setUpload={setUpload}></Upload>
-    </div>
+      <div className="text-center fs-4 fw-semibold">
+        {isAdmin && (
+          <>
+            <Link to="/dashboard">
+              <Button className="w-25 my-5 me-4" variant="outline-dark">
+                Go to DashBoard
+              </Button>
+            </Link>
+            <Link to="/buyer">
+              <Button className="w-25 my-5" variant="dark">
+                View as Buyer
+              </Button>
+            </Link>
+          </>
+        )}
+      </div>
+    </Container>
   );
 };
 

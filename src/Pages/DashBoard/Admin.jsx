@@ -4,6 +4,7 @@ import { UserAuth } from "../../Auth/AuthContext";
 import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const Admin = () => {
   const { user } = useContext(UserAuth);
@@ -72,7 +73,7 @@ const Admin = () => {
       <h3 className="text-center mt-5 mb-4`">
         Greeting Admin {user?.displayName}
       </h3>
-      <Table striped bordered hover className="text-center mt-4">
+      <Table striped bordered hover className="text-center mt-4 w-100">
         <thead>
           <tr>
             <th>Serial</th>
@@ -113,7 +114,10 @@ const Admin = () => {
                 )}
               </td>
               <td>
-                <Button variant="outline-danger" onClick={() => handleDelete(us._id)}>
+                <Button
+                  variant="outline-danger"
+                  onClick={() => handleDelete(us._id)}
+                >
                   Remove User
                 </Button>
               </td>
@@ -121,6 +125,16 @@ const Admin = () => {
           </tbody>
         ))}
       </Table>
+      <div className="text-center my-4 fs-4 fw-semibold">
+        <Link to='/seller'>
+          {" "}
+          <Button className="w-25 me-3" variant="outline-success">View as Seller</Button>
+        </Link>
+        <Link to='/buyer'>
+          {" "}
+          <Button className="w-25" variant="success">View as Buyer</Button>
+        </Link>
+      </div>
     </div>
   );
 };
