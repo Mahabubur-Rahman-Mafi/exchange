@@ -1,6 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet";
-import Product from "../Porducts/Product";
+import Adversite from "./Adversite";
 import Banner from "./Banner";
 import Categories from "./Category/Categories";
 
@@ -14,6 +14,7 @@ const Home = () => {
       {/* items */}
       <Banner></Banner>
       <Categories></Categories>
+      <Adversite></Adversite>
     </>
   );
 };

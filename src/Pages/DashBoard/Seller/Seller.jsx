@@ -10,6 +10,7 @@ import Upload from "./Upload";
 const Seller = () => {
   const { user } = useContext(UserAuth);
   const [upload, setUpload] = useState(false)
+  const [btn, setBtn] = useState(false)
   
   const {
     data: products = [],
@@ -28,7 +29,27 @@ const Seller = () => {
 if (upload) {
   refetch();
 }
-  // load category
+  // update advertise
+  const handleAdvertise = (id) => {
+    console.log(id);
+    const update = {
+      text: "advertised",
+    };
+    fetch(`http://localhost:5000/products/${id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(update),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toast.success("Advertise Started");
+        setBtn(true)
+      });
+  };
+
   // delete product
   const handleDelete = (id) => {
     fetch(`http://localhost:5000/products/${id}`, { method: "DELETE" })
@@ -87,12 +108,13 @@ if (upload) {
                   </Button>
                 </td>
                 <td>
-                  <Button
+                  {!order?.advertise &&
+                    <Button Button
                     variant="outline-success"
-                    // onClick={()=>handleAdvertise(order._id)
+                    onClick={() => handleAdvertise(order._id)}
                   >
                     Advertised
-                  </Button>
+                  </Button>}
                 </td>
               </tr>
             </tbody>
