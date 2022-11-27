@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { UserAuth } from "../../../Auth/AuthContext";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import toast from "react-hot-toast";
-import { useQuery } from "@tanstack/react-query";
 
 const Upload = ({ setUpload }) => {
   const { user } = useContext(UserAuth);
@@ -24,7 +23,6 @@ const Upload = ({ setUpload }) => {
       .then((res) => res.json())
       .then((d) => setCat(d));
   }, [user]);
-console.log(cat);
   // form submit
   const onSubmit = (d) => {
     handleClose();
@@ -37,7 +35,6 @@ console.log(cat);
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         setUpload(true);
         toast.success("Product Added");
         reset();

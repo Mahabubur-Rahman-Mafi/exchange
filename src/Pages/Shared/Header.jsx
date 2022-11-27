@@ -52,35 +52,17 @@ const Header = () => {
             <Nav>
               {user?.uid ? (
                 <>
-                  <Dropdown>
-                    <Dropdown.Toggle
-                      variant="transparent"
-                      className="p-0"
-                      id="dropdown-basic"
-                    >
-                      {user?.photoURL ? (
-                        <Image
-                          src={user.photoURL}
-                          width="40px"
-                          height="40px"
-                          roundedCircle
-                        />
-                      ) : (
-                        <FaUserCircle className="fs-3 p-0"></FaUserCircle>
-                      )}
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">
-                        Another action
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">
-                        Something else
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <Button variant="outline-primary" onClick={buttonLogOut}>
+                  {user?.photoURL ? (
+                    <Image
+                      src={user.photoURL}
+                      width="40px"
+                      height="40px"
+                      roundedCircle
+                    />
+                  ) : (
+                    <FaUserCircle className="fs-2 p-0"></FaUserCircle>
+                  )}
+                  <Button variant="outline-primary" className="ms-3" onClick={buttonLogOut}>
                     Log Out
                   </Button>
                 </>

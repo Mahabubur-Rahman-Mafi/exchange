@@ -8,30 +8,24 @@ import Upload from "./Upload";
 import useAdmin from "../../../Hooks/useAdmin";
 import { Link } from "react-router-dom";
 
-
 const Seller = () => {
   const { user } = useContext(UserAuth);
-  const [upload, setUpload] = useState(false)
-  const [btn, setBtn] = useState(false)
-  const [isAdmin] = useAdmin(user?.email)
-  
+  const [upload, setUpload] = useState(false);
+  const [isAdmin] = useAdmin(user?.email);
+
   const {
     data: products = [],
-    isLoading,
     refetch,
   } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch(`http://localhost:5000/products/${user?.email}`).
-        then((res) => {
-          return res.json()
-        }
-
-      ),
+      fetch(`http://localhost:5000/products/${user?.email}`).then((res) => {
+        return res.json();
+      }),
   });
-if (upload) {
-  refetch();
-}
+  if (upload) {
+    refetch();
+  }
   // update advertise
   const handleAdvertise = (id) => {
     const update = {
@@ -46,9 +40,7 @@ if (upload) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success("Advertise Started");
-        setBtn(true)
       });
   };
 
@@ -57,15 +49,13 @@ if (upload) {
     fetch(`http://localhost:5000/products/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success("Product removed");
-        refetch()
+        refetch();
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Failed");
       });
-  }
+  };
   refetch();
   return (
     <Container>

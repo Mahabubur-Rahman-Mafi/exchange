@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import Spinner from "../../../Global/Spinner";
 import { format } from "date-fns";
 import useSeller from "../../../Hooks/useSeller";
-import { FaCheck, FaCut } from "react-icons/fa";
+import { FaCheck,  } from "react-icons/fa";
 
 const ProductCard = ({ p }) => {
   const { register, handleSubmit, required, reset } = useForm();
@@ -43,7 +43,6 @@ const ProductCard = ({ p }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         toast.success('Order Added')
         reset()
       })

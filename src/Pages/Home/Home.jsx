@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet";
 import Adversite from "./Adversite";
 import Banner from "./Banner";
 import Categories from "./Category/Categories";
+import FAQ from "./FAQ";
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Banner></Banner>
       <Categories></Categories>
       <Adversite></Adversite>
+      <FAQ></FAQ>
     </>
   );
 };

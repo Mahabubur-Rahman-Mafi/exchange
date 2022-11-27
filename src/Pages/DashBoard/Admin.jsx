@@ -28,7 +28,6 @@ const Admin = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success("User Verified");
         refetch();
       });
@@ -47,7 +46,6 @@ const Admin = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success("New Admin Assign");
         refetch();
       });
@@ -58,12 +56,10 @@ const Admin = () => {
     fetch(`http://localhost:5000/users/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success("User Removed");
         refetch();
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Failed");
       });
   };
@@ -126,13 +122,17 @@ const Admin = () => {
         ))}
       </Table>
       <div className="text-center my-4 fs-4 fw-semibold">
-        <Link to='/seller'>
+        <Link to="/seller">
           {" "}
-          <Button className="w-25 me-3" variant="outline-success">View as Seller</Button>
+          <Button className="w-25 me-3" variant="outline-success">
+            View as Seller
+          </Button>
         </Link>
-        <Link to='/buyer'>
+        <Link to="/buyer">
           {" "}
-          <Button className="w-25" variant="success">View as Buyer</Button>
+          <Button className="w-25" variant="success">
+            View as Buyer
+          </Button>
         </Link>
       </div>
     </div>

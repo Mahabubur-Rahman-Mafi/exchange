@@ -9,8 +9,8 @@ import useAdmin from "../../Hooks/useAdmin";
 import { Link } from "react-router-dom";
 
 const Buyer = () => {
-  const { user, } = useContext(UserAuth);
-  const [isAdmin] = useAdmin(user?.email)
+  const { user } = useContext(UserAuth);
+  const [isAdmin] = useAdmin(user?.email);
   const {
     data: orders = [],
     isLoading,
@@ -27,12 +27,10 @@ const Buyer = () => {
     fetch(`http://localhost:5000/orders/${id}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         toast.success("Booking Cancel");
         refetch();
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Failed");
       });
   };
