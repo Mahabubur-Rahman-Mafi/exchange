@@ -31,7 +31,6 @@ if (upload) {
 }
   // update advertise
   const handleAdvertise = (id) => {
-    console.log(id);
     const update = {
       text: "advertised",
     };

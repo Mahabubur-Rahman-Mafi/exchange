@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -9,18 +9,23 @@ import toast from "react-hot-toast";
 import Spinner from "../../../Global/Spinner";
 import { format } from "date-fns";
 import useSeller from "../../../Hooks/useSeller";
+import { FaCheck, FaCut } from "react-icons/fa";
 
 const ProductCard = ({ p }) => {
   const { register, handleSubmit, required, reset } = useForm();
 
   const { user, loader } = useContext(UserAuth);
-  const time =  new Date().toLocaleString() ;
   const [show, setShow] = useState(false);
   const [clicked, setClicked] = useState({})
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [isSeller] =useSeller(user?.email)
-
+  const [isSeller] = useSeller(user?.email)
+  const [us, setUs] =useState([])
+  useEffect(() => {
+    fetch("http://localhost:5000/users")
+      .then(res => res.json())
+    .then(d=>setUs(d))
+    }, []);
   if (loader) {
     return <Spinner></Spinner>;
   }
@@ -68,12 +73,21 @@ const ProductCard = ({ p }) => {
           <ListGroup.Item>Usages: {p.usagesTime}</ListGroup.Item>
           <ListGroup.Item>Asking Price: {p.amount} BDT</ListGroup.Item>
           <ListGroup.Item>Market Price: {p.originalPrice}BDT</ListGroup.Item>
-          <ListGroup.Item>Sell by: {p?.sellerName}</ListGroup.Item>
+          <ListGroup.Item>
+            <>Sell by: {p?.sellerName}</>
+            <> {us?.map((u) => !u?.status === 'verified' ?
+              <FaCheck className="text-primary" ></FaCheck> :
+              '')}</>
+          </ListGroup.Item>
           <ListGroup.Item>Date: {p?.date}</ListGroup.Item>
         </ListGroup>
 
         <Card.Footer className="text-center">
-          <Button className="text-end" onClick={() => handleButton(p._id)} disabled={isSeller}>
+          <Button
+            className="text-end"
+            onClick={() => handleButton(p._id)}
+            disabled={isSeller}
+          >
             Book Now
           </Button>
         </Card.Footer>
@@ -96,8 +110,8 @@ const ProductCard = ({ p }) => {
               type="text"
               {...register("date", { required: true })}
               readOnly
-              defaultValue={format(new Date(), 'PP')}
-              className='mb-2'
+              defaultValue={format(new Date(), "PP")}
+              className="mb-2"
             />
             <Form.Label>Email address</Form.Label>
             <Form.Control
