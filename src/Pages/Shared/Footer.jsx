@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Container, Image, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { FaExternalLinkSquareAlt, FaFacebookSquare, FaInstagramSquare, FaLinkedin } from "react-icons/fa";
+import {  FaFacebookSquare, FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
     <Container className="py-3">

@@ -42,6 +42,9 @@
   gap: 35px;
   padding: 30px 0px;
 }
+.cate-card{
+  width: 100%;
+}
 }
 
 /* On screens that are 576px or less, set the background color to olive */
@@ -55,5 +58,8 @@
   grid-template-columns: repeat(1, 1fr);
   gap: 35px;
   padding: 30px 0px;
+}
+.cate-card{
+  width: 100%;
 }
 }

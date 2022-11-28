@@ -7,7 +7,7 @@ const CateCard = ({c}) => {
     return (
       <Link to={`/category/${c.categoryName}`}>
         <Button variant="transparent">
-          <div className="cate-card">
+          <div className="cate-card ">
             <h2 className="text-center align-items-center p-5">
               {c.categoryName}
             </h2>
