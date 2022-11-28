@@ -13,11 +13,13 @@ import Seller from "../Pages/DashBoard/Seller/Seller";
 import Buyer from "../Pages/DashBoard/Buyer";
 import AdminRoute from "./AdminRoute";
 import AdProducts from "../Pages/AdProducts";
+import Error from "../Pages/Error/Error";
 
 const routes = createBrowserRouter([
   {
     path: "/",
     element: <Main></Main>,
+    errorElement:<Error></Error>,
     children: [
       {
         path: "/",
