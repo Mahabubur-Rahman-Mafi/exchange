@@ -78,7 +78,7 @@ const Seller = () => {
           }
         </p>
         {products?.length >= 1 && (
-          <Table striped bordered hover className="text-center mt-4">
+          <Table striped bordered hover size="sm" className="text-center mt-4">
             <thead>
               <tr>
                 <th>Serial</th>
