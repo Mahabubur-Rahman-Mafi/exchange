@@ -5,13 +5,16 @@ import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const Admin = () => {
   const { user } = useContext(UserAuth);
   const { data: users = [], refetch } = useQuery({
     querykey: ["users"],
     queryFn: () =>
-      fetch("http://localhost:5000/users").then((res) => res.json()),
+      fetch("https://exchange-server.vercel.app/users").then((res) =>
+        res.json()
+      ),
   });
 
   // handleVerify
@@ -19,7 +22,7 @@ const Admin = () => {
     const verify = {
       text: "verified",
     };
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://exchange-server.vercel.app/users/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -37,7 +40,7 @@ const Admin = () => {
     const makeAdmin = {
       text: "admin",
     };
-    fetch(`http://localhost:5000/users/${id}`, {
+    fetch(`https://exchange-server.vercel.app/users/${id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -53,7 +56,9 @@ const Admin = () => {
 
   // remove user
   const handleDelete = (id) => {
-    fetch(`http://localhost:5000/users/${id}`, { method: "DELETE" })
+    fetch(`https://exchange-server.vercel.app/users/${id}`, {
+      method: "DELETE",
+    })
       .then((res) => res.json())
       .then((data) => {
         toast.success("User Removed");
@@ -65,77 +70,89 @@ const Admin = () => {
   };
 
   return (
-    <div>
-      <h3 className="text-center mt-5 mb-4`">
-        Greeting Admin {user?.displayName}
-      </h3>
-      <Table striped bordered hover className="text-center mt-4 w-100">
-        <thead>
-          <tr>
-            <th>Serial</th>
-            <th>Name</th>
-            <th>Role</th>
-            <th>Status</th>
-            <th>Make Admin</th>
-            <th>Remove User</th>
-          </tr>
-        </thead>
-
-        {users.map((us, i) => (
-          <tbody key={us._id}>
-            {" "}
+    <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title> Admin Dashboard | ex-change</title>
+      </Helmet>
+      <div>
+        <h3 className="text-center mt-5 mb-4`">
+          Greeting Admin {user?.displayName}
+        </h3>
+        <Table striped bordered hover className="text-center mt-4 w-100">
+          <thead>
             <tr>
-              <td>{i + 1}</td>
-              <td>{us.name}</td>
-              <td>{us.role}</td>
-
-              <td>
-                {!us?.status && (
-                  <Button
-                    variant="outline-success"
-                    onClick={() => handleVerify(us._id)}
-                  >
-                    Verify User
-                  </Button>
-                )}
-              </td>
-              <td>
-                {us?.role !== "admin" && (
-                  <Button
-                    variant="outline-dark"
-                    onClick={() => handleAdmin(us._id)}
-                  >
-                    Make Admin
-                  </Button>
-                )}
-              </td>
-              <td>
-                <Button
-                  variant="outline-danger"
-                  onClick={() => handleDelete(us._id)}
-                >
-                  Remove User
-                </Button>
-              </td>
+              <th>Serial</th>
+              <th>Name</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Make Admin</th>
+              <th>Remove User</th>
             </tr>
-          </tbody>
-        ))}
-      </Table>
-      <div className="text-center my-4 fs-4 fw-semibold">
-        <Link to="/seller">
-          {" "}
-          <Button className="w-25 me-3" variant="outline-success">
-            View as Seller
-          </Button>
-        </Link>
-        <Link to="/buyer">
-          {" "}
-          <Button className="w-25" variant="success">
-            View as Buyer
-          </Button>
-        </Link>
+          </thead>
+
+          {users.map((us, i) => (
+            <tbody key={us._id}>
+              {" "}
+              <tr>
+                <td>{i + 1}</td>
+                <td>{us.name}</td>
+                <td>{us.role}</td>
+
+                <td>
+                  {!us?.status && (
+                    <Button
+                      variant="outline-success"
+                      onClick={() => handleVerify(us._id)}
+                    >
+                      Verify User
+                    </Button>
+                  )}
+                </td>
+                <td>
+                  {us?.role !== "admin" && (
+                    <Button
+                      variant="outline-dark"
+                      onClick={() => handleAdmin(us._id)}
+                    >
+                      Make Admin
+                    </Button>
+                  )}
+                </td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    onClick={() => handleDelete(us._id)}
+                  >
+                    Remove User
+                  </Button>
+                </td>
+              </tr>
+            </tbody>
+          ))}
+        </Table>
+        <div className="text-center my-4 fs-4 fw-semibold">
+          <Link to="/seller">
+            {" "}
+            <Button className="w-25 me-3" variant="outline-success">
+              View as Seller
+            </Button>
+          </Link>
+          <Link to="/buyer">
+            {" "}
+            <Button className="w-25" variant="success">
+              View as Buyer
+            </Button>
+          </Link>
+          <Link to="/products">
+            {" "}
+            <Button className="w-25" variant="outline-success">
+              View all products
+            </Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,31 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useState } from "react";
-import { UserAuth } from "../../../Auth/AuthContext";
 import Table from "react-bootstrap/Table";
 import { Button, Container } from "react-bootstrap";
 import toast from "react-hot-toast";
-import Upload from "./Upload";
-import useAdmin from "../../../Hooks/useAdmin";
 import { Link } from "react-router-dom";
+import useAdmin from "../Hooks/useAdmin";
+import { UserAuth } from "../Auth/AuthContext";
 import { Helmet } from "react-helmet";
-
-const Seller = () => {
+const AdProducts = () => {
   const { user } = useContext(UserAuth);
-  const [upload, setUpload] = useState(false);
   const [isAdmin] = useAdmin(user?.email);
-
   const { data: products = [], refetch } = useQuery({
     queryKey: ["products"],
     queryFn: () =>
-      fetch(`https://exchange-server.vercel.app/products/${user?.email}`).then(
-        (res) => {
-          return res.json();
-        }
-      ),
+      fetch(`https://exchange-server.vercel.app/products`).then((res) => {
+        return res.json();
+      }),
   });
-  if (upload) {
-    refetch();
-  }
+  refetch();
   // update advertise
   const handleAdvertise = (id) => {
     const update = {
@@ -43,6 +35,7 @@ const Seller = () => {
         toast.success("Advertise Started");
       });
   };
+  refetch();
 
   // delete product
   const handleDelete = (id) => {
@@ -58,12 +51,11 @@ const Seller = () => {
         toast.error("Failed");
       });
   };
-  refetch();
   return (
     <>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>Seller Dashboard | ex-change</title>
+        <title>All products | ex-change</title>
       </Helmet>
       <Container>
         <h4 className="text-center">Welcome Back {user?.displayName}</h4>
@@ -72,8 +64,8 @@ const Seller = () => {
             <>
               {products?.length}
               {products?.length <= 1
-                ? " product you want to sell"
-                : " products you want to sell"}
+                ? " product in your Database"
+                : " products in your Database"}
             </>
           }
         </p>
@@ -122,7 +114,6 @@ const Seller = () => {
             ))}
           </Table>
         )}
-        <Upload setUpload={setUpload}></Upload>
         <div className="text-center fs-4 fw-semibold">
           {isAdmin && (
             <>
@@ -144,4 +135,4 @@ const Seller = () => {
   );
 };
 
-export default Seller;
+export default AdProducts;

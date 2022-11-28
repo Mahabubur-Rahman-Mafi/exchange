@@ -19,14 +19,14 @@ const Upload = ({ setUpload }) => {
 
   //   category upload
   useEffect(() => {
-    fetch("http://localhost:5000/categories")
+    fetch("https://exchange-server.vercel.app/categories")
       .then((res) => res.json())
       .then((d) => setCat(d));
   }, [user]);
   // form submit
   const onSubmit = (d) => {
     handleClose();
-    fetch("http://localhost:5000/products", {
+    fetch("https://exchange-server.vercel.app/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,6 @@ const Upload = ({ setUpload }) => {
         console.error("Error:", error);
         toast.error("Failed to add");
       });
-
   };
   return (
     <>

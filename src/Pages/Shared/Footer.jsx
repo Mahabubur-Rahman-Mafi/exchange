@@ -11,7 +11,7 @@ const Footer = () => {
           <Image src={logo} width="160px" className="mb-2" />
           <p>
             Ex-change is E-commerce website. <br />
-            You can buy and sell your product here.
+            You can buy and sell your used product here.
           </p>
         </Col>
         <Col sm={12} md={6} lg={4} className="text-center">

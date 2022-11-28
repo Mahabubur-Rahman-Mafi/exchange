@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import Seller from "../Pages/DashBoard/Seller/Seller";
 import Buyer from "../Pages/DashBoard/Buyer";
 import AdminRoute from "./AdminRoute";
+import AdProducts from "../Pages/AdProducts";
 
 const routes = createBrowserRouter([
   {
@@ -29,7 +30,7 @@ const routes = createBrowserRouter([
       {
         path: "/product",
         element: <Product></Product>,
-        loader: () => fetch("http://localhost:5000/categories"),
+        loader: () => fetch("https://exchange-server.vercel.app/categories"),
         children: [
           {
             path: "/product/category/:id",
@@ -39,7 +40,9 @@ const routes = createBrowserRouter([
               </PrivateRoute>
             ),
             loader: ({ params }) =>
-              fetch(`http://localhost:5000/product/category/${params.id}`),
+              fetch(
+                `https://exchange-server.vercel.app/product/category/${params.id}`
+              ),
           },
         ],
       },
@@ -51,7 +54,7 @@ const routes = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/category/${params.id}`),
+          fetch(`https://exchange-server.vercel.app/category/${params.id}`),
       },
       {
         path: "dashboard",
@@ -62,6 +65,14 @@ const routes = createBrowserRouter([
         element: (
           <AdminRoute>
             <Seller></Seller>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "products",
+        element: (
+          <AdminRoute>
+            <AdProducts></AdProducts>
           </AdminRoute>
         ),
       },

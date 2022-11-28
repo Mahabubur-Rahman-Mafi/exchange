@@ -14,15 +14,16 @@ import toast from "react-hot-toast";
 
 const SignUp = () => {
   const googleProvider = new GoogleAuthProvider();
-  const { googleAuthProvider, createUser, setUser, nameUpdate } = useContext(UserAuth);
-  const [er, setEr] =useState('')
+  const { googleAuthProvider, createUser, setUser, nameUpdate } =
+    useContext(UserAuth);
+  const [er, setEr] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
 
-  const { register, handleSubmit, } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const onSubmit = (d) => {
     createUser(d.email, d.password)
@@ -31,7 +32,7 @@ const SignUp = () => {
         setUser(user);
         nameUpdate(d.name);
         navigate(from, { replace: true });
-        toast.success('Sign Up Successfully')
+        toast.success("Sign Up Successfully");
       })
       .catch((e) => {
         setEr(e.messages);
@@ -43,7 +44,7 @@ const SignUp = () => {
       name: d.name,
       role: d.type,
     };
-    fetch("http://localhost:5000/users", {
+    fetch("https://exchange-server.vercel.app/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +57,7 @@ const SignUp = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error('SignUp Failed')
+        toast.error("SignUp Failed");
       });
   };
 
@@ -89,7 +90,7 @@ const SignUp = () => {
             <Form.Control
               type="text"
               placeholder="Your Full Name"
-              {...register("name", { required:true })}
+              {...register("name", { required: true })}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -123,7 +124,7 @@ const SignUp = () => {
               <option value="buyer">Buyer</option>
             </Form.Select>
           </FloatingLabel>
-          <p className="text-danger">{ er}</p>
+          <p className="text-danger">{er}</p>
           <Button
             variant="primary"
             type="submit"

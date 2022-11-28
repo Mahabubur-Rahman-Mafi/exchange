@@ -14,9 +14,27 @@ const FAQ = () => {
             </Accordion.Body>
           </Accordion.Item>
           <Accordion.Item eventKey="1">
-            <Accordion.Header>How can I payment?</Accordion.Header>
+            <Accordion.Header>How can I do payment?</Accordion.Header>
             <Accordion.Body>
               You can payment any type of bank bank or mobile banking you want. You can use any payment gateway to payment the site.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>It it trustable?</Accordion.Header>
+            <Accordion.Body>
+              Yes. You can believe it without any hesitation. You can also see the verified seller also here.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="3">
+            <Accordion.Header>It there any return policy?</Accordion.Header>
+            <Accordion.Body>
+              At present , there are no return policy. You have to checked your product before purchase. Once you purchase the product you can return it.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="4">
+            <Accordion.Header>How can I manage my meeting</Accordion.Header>
+            <Accordion.Body>
+              You meeting time and date and location in you hand. You can placed a meeting whenever you want.
             </Accordion.Body>
           </Accordion.Item>
         </Accordion>

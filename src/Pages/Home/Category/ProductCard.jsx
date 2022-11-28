@@ -9,32 +9,31 @@ import toast from "react-hot-toast";
 import Spinner from "../../../Global/Spinner";
 import { format } from "date-fns";
 import useSeller from "../../../Hooks/useSeller";
-import { FaCheck,  } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 
 const ProductCard = ({ p }) => {
   const { register, handleSubmit, required, reset } = useForm();
 
   const { user, loader } = useContext(UserAuth);
   const [show, setShow] = useState(false);
-  const [clicked, setClicked] = useState({})
+  const [clicked, setClicked] = useState({});
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [isSeller] = useSeller(user?.email)
-  const [us, setUs] =useState([])
+  const [isSeller] = useSeller(user?.email);
+  const [us, setUs] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/users")
-      .then(res => res.json())
-    .then(d=>setUs(d))
-    }, []);
+    fetch("https://exchange-server.vercel.app/users")
+      .then((res) => res.json())
+      .then((d) => setUs(d));
+  }, []);
   if (loader) {
     return <Spinner></Spinner>;
   }
 
-
   // form submit
   const onSubmit = (data) => {
-    handleClose()
-    fetch("http://localhost:5000/orders", {
+    handleClose();
+    fetch("https://exchange-server.vercel.app/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,23 +42,21 @@ const ProductCard = ({ p }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.success('Order Added')
-        reset()
+        toast.success("Order Added");
+        reset();
       })
       .catch((error) => {
         console.error("Error:", error);
         toast.error("Order Failed");
       });
-
-  }
-
+  };
 
   const handleButton = (e) => {
-    handleShow()
+    handleShow();
     if (e === p._id) {
-      setClicked(p)
+      setClicked(p);
     }
-  }
+  };
   return (
     <div>
       <Card className="mt-4 ">
@@ -74,9 +71,16 @@ const ProductCard = ({ p }) => {
           <ListGroup.Item>Market Price: {p.originalPrice}BDT</ListGroup.Item>
           <ListGroup.Item>
             <>Sell by: {p?.sellerName}</>
-            <> {us?.map((u) => !u?.status === 'verified' ?
-              <FaCheck className="text-primary" ></FaCheck> :
-              '')}</>
+            <>
+              {" "}
+              {us.map((u) =>
+                !u.status === "verified" ? (
+                  <FaCheck className="text-primary"></FaCheck>
+                ) : (
+                  ""
+                )
+              )}
+            </>
           </ListGroup.Item>
           <ListGroup.Item>Date: {p?.date}</ListGroup.Item>
         </ListGroup>
