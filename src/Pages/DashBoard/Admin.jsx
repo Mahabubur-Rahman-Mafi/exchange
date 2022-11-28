@@ -79,7 +79,27 @@ const Admin = () => {
         <h3 className="text-center mt-5 mb-4`">
           Greeting Admin {user?.displayName}
         </h3>
-        <Table striped bordered hover className="text-center mt-4 w-100">
+        <div className="text-center my-4 fs-4 fw-semibold">
+          <Link to="/seller">
+            {" "}
+            <Button className="w-25 me-3" variant="outline-success">
+              View as Seller
+            </Button>
+          </Link>
+          <Link to="/buyer">
+            {" "}
+            <Button className="w-25" variant="success">
+              View as Buyer
+            </Button>
+          </Link>
+          <Link to="/products">
+            {" "}
+            <Button className="w-25" variant="outline-success">
+              View all products
+            </Button>
+          </Link>
+        </div>
+        <Table striped bordered hover size="sm" className="text-center mt-4">
           <thead>
             <tr>
               <th>Serial</th>
@@ -131,26 +151,6 @@ const Admin = () => {
             </tbody>
           ))}
         </Table>
-        <div className="text-center my-4 fs-4 fw-semibold">
-          <Link to="/seller">
-            {" "}
-            <Button className="w-25 me-3" variant="outline-success">
-              View as Seller
-            </Button>
-          </Link>
-          <Link to="/buyer">
-            {" "}
-            <Button className="w-25" variant="success">
-              View as Buyer
-            </Button>
-          </Link>
-          <Link to="/products">
-            {" "}
-            <Button className="w-25" variant="outline-success">
-              View all products
-            </Button>
-          </Link>
-        </div>
       </div>
     </>
   );
